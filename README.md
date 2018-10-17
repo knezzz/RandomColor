@@ -1,5 +1,7 @@
 # Random color generator
 
+[![pub package](https://img.shields.io/pub/v/random_color.svg)](https://pub.dartlang.org/packages/random_color)
+
 This library will generate random colors that are visually pleasing and can be customized by passing custom hue, saturation and brightness range.
 This allows it to generate just specific color with slight differences.
 
