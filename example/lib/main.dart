@@ -22,9 +22,7 @@ class _MyAppState extends State<MyApp> {
       appBar: new AppBar(
         title: const Text('Example of Random colors library'),
       ),
-      body: Container(
-        child: _showColors()
-      ),
+      body: Container(child: _showColors()),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
@@ -51,19 +49,19 @@ class _MyAppState extends State<MyApp> {
 
   Widget _showColors() {
     return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+      gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index){
+      itemBuilder: (BuildContext context, int index) {
         Color _color;
 
-        if(generatedColors.length > index){
+        if (generatedColors.length > index) {
           _color = generatedColors[index];
-        }else{
+        } else {
           _color = RandomColor().randomColor(
-            colorHue: _hueType,
-            colorSaturation: _colorSaturation,
-            colorBrightness: _colorLuminosity
-          );
+              colorHue: _hueType,
+              colorSaturation: _colorSaturation,
+              colorBrightness: _colorLuminosity);
 
           generatedColors.add(_color);
         }
@@ -89,21 +87,22 @@ class _MyAppState extends State<MyApp> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text(getColorNameFromColor(_color).getName,
-                    style: Theme.of(context).textTheme.title.copyWith(
-                      fontSize: 13.0,
-                      color: getTextColor()
-                    ),
+                  child: Text(
+                    getColorNameFromColor(_color).getName,
+                    style: Theme.of(context)
+                        .textTheme
+                        .title
+                        .copyWith(fontSize: 13.0, color: getTextColor()),
                   ),
                 ),
                 Container(
                   alignment: Alignment.centerRight,
-                  child: Text('#${_color.value.toRadixString(16).toUpperCase()}',
+                  child: Text(
+                    '#${_color.value.toRadixString(16).toUpperCase()}',
                     style: Theme.of(context).textTheme.caption.copyWith(
-                      color: getTextColor(),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w300
-                    ),
+                        color: getTextColor(),
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w300),
                   ),
                 ),
               ],
@@ -116,11 +115,9 @@ class _MyAppState extends State<MyApp> {
 
   void _showFilterDialog() {
     showDialog<Null>(
-      context: context,
-      builder: (BuildContext context){
-        return SimpleDialog(
-          title: Text('Hello!'),
-          children: <Widget>[
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(title: Text('Hello!'), children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -130,26 +127,23 @@ class _MyAppState extends State<MyApp> {
                     color: Colors.white,
                     child: Text('Color hue: '),
                   ),
-
                   DropdownButton<int>(
                     value: _hueType.type,
-                    onChanged: (int hueType){
+                    onChanged: (int hueType) {
                       setState(() => _hueType = ColorHue.values[hueType]);
 
                       Navigator.of(context).pop();
                       _updateColor();
                     },
-                    items: ColorHue.values.map((ColorHue cf) => DropdownMenuItem<int>(
-                      child: Container(
-                        child: Text(cf.toString())
-                      ),
-                      value: cf.type)
-                    ).toList(),
+                    items: ColorHue.values
+                        .map((ColorHue cf) => DropdownMenuItem<int>(
+                            child: Container(child: Text(cf.toString())),
+                            value: cf.type))
+                        .toList(),
                   )
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -159,26 +153,24 @@ class _MyAppState extends State<MyApp> {
                     color: Colors.white,
                     child: Text('Color brightness: '),
                   ),
-
                   DropdownButton<int>(
                     value: _colorLuminosity.type,
-                    onChanged: (int luminosity){
-                      setState(() => _colorLuminosity = ColorBrightness.values[luminosity]);
+                    onChanged: (int luminosity) {
+                      setState(() => _colorLuminosity =
+                          ColorBrightness.values[luminosity]);
 
                       Navigator.of(context).pop();
                       _updateColor();
                     },
-                    items: ColorBrightness.values.map((ColorBrightness l) => DropdownMenuItem<int>(
-                      child: Container(
-                        child: Text(l.toString())
-                      ),
-                      value: l.type)
-                    ).toList(),
+                    items: ColorBrightness.values
+                        .map((ColorBrightness l) => DropdownMenuItem<int>(
+                            child: Container(child: Text(l.toString())),
+                            value: l.type))
+                        .toList(),
                   )
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -188,32 +180,29 @@ class _MyAppState extends State<MyApp> {
                     color: Colors.white,
                     child: Text('Color saturation: '),
                   ),
-
                   DropdownButton<int>(
                     value: _colorSaturation.type,
-                    onChanged: (int saturation){
-                      setState(() => _colorSaturation = ColorSaturation.values[saturation]);
+                    onChanged: (int saturation) {
+                      setState(() => _colorSaturation =
+                          ColorSaturation.values[saturation]);
 
                       Navigator.of(context).pop();
                       _updateColor();
                     },
-                    items: ColorSaturation.values.map((ColorSaturation cf) => DropdownMenuItem<int>(
-                      child: Container(
-                        child: Text(cf.toString())
-                      ),
-                      value: cf.type)
-                    ).toList(),
+                    items: ColorSaturation.values
+                        .map((ColorSaturation cf) => DropdownMenuItem<int>(
+                            child: Container(child: Text(cf.toString())),
+                            value: cf.type))
+                        .toList(),
                   )
                 ],
               ),
             ),
-          ]
-        );
-      }
-    ).catchError(print);
+          ]);
+        }).catchError(print);
   }
 
-  void _updateColor(){
+  void _updateColor() {
     setState(() {
       generatedColors.clear();
     });

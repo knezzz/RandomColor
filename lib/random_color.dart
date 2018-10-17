@@ -1,7 +1,7 @@
 library random_color;
 
-import 'dart:collection';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 part 'random_color/color_info.dart';

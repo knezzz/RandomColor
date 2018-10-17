@@ -55,27 +55,30 @@ void main() {
     expect(getColorNameFromString('00FF00').getName.toLowerCase(), 'green');
     expect(getColorNameFromString('0000FF').getName.toLowerCase(), 'blue');
   });
-  
-  test('Color generation', (){
+
+  test('Color generation', () {
     final RandomColor rc = RandomColor();
 
     final Color _redColor = rc.randomColor(
-      colorHue: ColorHue.custom(hueRange: Range.zero()),
-      colorSaturation: ColorSaturation.custom(saturationRange: Range.staticValue(100)),
-      colorBrightness: ColorBrightness.custom(brightnessRange: Range.staticValue(50))
-    );
+        colorHue: ColorHue.custom(hueRange: Range.zero()),
+        colorSaturation:
+            ColorSaturation.custom(saturationRange: Range.staticValue(100)),
+        colorBrightness:
+            ColorBrightness.custom(brightnessRange: Range.staticValue(50)));
 
     final Color _greenColor = rc.randomColor(
-      colorHue: ColorHue.custom(hueRange: Range.staticValue(120)),
-      colorSaturation: ColorSaturation.custom(saturationRange: Range.staticValue(100)),
-      colorBrightness: ColorBrightness.custom(brightnessRange: Range.staticValue(50))
-    );
+        colorHue: ColorHue.custom(hueRange: Range.staticValue(120)),
+        colorSaturation:
+            ColorSaturation.custom(saturationRange: Range.staticValue(100)),
+        colorBrightness:
+            ColorBrightness.custom(brightnessRange: Range.staticValue(50)));
 
     final Color _blueColor = rc.randomColor(
-      colorHue: ColorHue.custom(hueRange: Range.staticValue(240)),
-      colorSaturation: ColorSaturation.custom(saturationRange: Range.staticValue(100)),
-      colorBrightness: ColorBrightness.custom(brightnessRange: Range.staticValue(50))
-    );
+        colorHue: ColorHue.custom(hueRange: Range.staticValue(240)),
+        colorSaturation:
+            ColorSaturation.custom(saturationRange: Range.staticValue(100)),
+        colorBrightness:
+            ColorBrightness.custom(brightnessRange: Range.staticValue(50)));
 
     expect(getColorNameFromColor(_redColor).getName.toLowerCase(), 'red');
     expect(getColorNameFromColor(_greenColor).getName.toLowerCase(), 'green');

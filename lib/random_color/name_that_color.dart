@@ -1,78 +1,5 @@
 part of random_color;
 
-///
-/// Class for getting name of current color
-/// pass color code in hex value and get closest color name
-/// contains ~1500 color names
-///
-/// Dart port of: http://chir.ag/projects/ntc
-///
-
-class MyColor{
-  MyColor(this._color, this._name) : _hslColor = HSLColor.fromColor(_color);
-
-  final Color _color;
-  final String _name;
-  final HSLColor _hslColor;
-
-  String get getName => _name;
-  String get getCode => _color.value.toRadixString(16);
-  int get getRed => _color.red;
-  int get getGreen => _color.green;
-  int get getBlue => _color.blue;
-  int get getHue => _hslColor.hue.toInt();
-  int get getSaturation => (_hslColor.saturation * 100).toInt();
-  int get getLightness => (_hslColor.lightness * 100).toInt();
-}
-
-MyColor getColorNameFromString(String color){
-  color = color.toUpperCase();
-  if(color.length < 3 || color.length > 6)
-    return new MyColor(Colors.white, 'Invalid color $color');
-
-  if (color.length == 3)
-    color = color.substring(0, 1) + color.substring(0, 1) + color.substring(1, 1) + color.substring(1, 1) + color.substring(2, 1) + color.substring(2, 1);
-
-  final Color _color = Color(int.parse(color, radix: 16));
-  final int r = _color.red;
-  final int g = _color.green;
-  final int b = _color.blue;
-
-  final HSLColor hsl = HSLColor.fromColor(_color);
-  final int h = hsl.hue.toInt();
-  final int s = (hsl.saturation * 100).toInt();
-  final int l = (hsl.lightness * 100).toInt();
-
-  int ndf1, ndf2, ndf, df = -1, cl = -1;
-  for (int i = 0; i < colorNames.length; i++) {
-    if (color == colorNames[i].getCode)
-      return colorNames[i];
-
-    ndf1 = pow(r - colorNames[i].getRed, 2) + pow(g - colorNames[i].getGreen, 2) + pow(b - colorNames[i].getBlue, 2);
-    ndf2 = pow(h - colorNames[i].getHue, 2) + pow(s - colorNames[i].getSaturation, 2) + pow(l - colorNames[i].getLightness, 2);
-    ndf = ndf1 + ndf2 * 2;
-    if (df < 0 || df > ndf) {
-      df = ndf;
-      cl = i;
-    }
-  }
-
-  return cl < 0 ? new MyColor(Colors.white, 'Color [$color] not found!') : colorNames[cl];
-}
-
-///
-/// Error handling will show problematic color code
-///
-MyColor getColorNameFromColor(Color color){
-  final String colorName = '${color.value.toRadixString(16).substring(2)}';
-
-  try {
-    return getColorNameFromString(colorName);
-  }catch(rangeException){
-    return new MyColor(Colors.white, 'Code: #$colorName\nIs out of range!');
-  }
-}
-
 final List<MyColor> colorNames = <MyColor>[
   MyColor(Color(int.parse('000000', radix: 16)), 'Black'),
   MyColor(Color(int.parse('000080', radix: 16)), 'Navy Blue'),
@@ -1641,3 +1568,86 @@ final List<MyColor> colorNames = <MyColor>[
   MyColor(Color(int.parse('FFFFF0', radix: 16)), 'Ivory'),
   MyColor(Color(int.parse('FFFFFF', radix: 16)), 'White'),
 ];
+
+///
+/// Error handling will show problematic color code
+///
+MyColor getColorNameFromColor(Color color) {
+  final String colorName = '${color.value.toRadixString(16).substring(2)}';
+
+  try {
+    return getColorNameFromString(colorName);
+  } catch (rangeException) {
+    return new MyColor(Colors.white, 'Code: #$colorName\nIs out of range!');
+  }
+}
+
+MyColor getColorNameFromString(String color) {
+  color = color.toUpperCase();
+  if (color.length < 3 || color.length > 6)
+    return new MyColor(Colors.white, 'Invalid color $color');
+
+  if (color.length == 3)
+    color = color.substring(0, 1) +
+        color.substring(0, 1) +
+        color.substring(1, 1) +
+        color.substring(1, 1) +
+        color.substring(2, 1) +
+        color.substring(2, 1);
+
+  final Color _color = Color(int.parse(color, radix: 16));
+  final int r = _color.red;
+  final int g = _color.green;
+  final int b = _color.blue;
+
+  final HSLColor hsl = HSLColor.fromColor(_color);
+  final int h = hsl.hue.toInt();
+  final int s = (hsl.saturation * 100).toInt();
+  final int l = (hsl.lightness * 100).toInt();
+
+  int ndf1, ndf2, ndf, df = -1, cl = -1;
+  for (int i = 0; i < colorNames.length; i++) {
+    if (color == colorNames[i].getCode) return colorNames[i];
+
+    ndf1 = pow(r - colorNames[i].getRed, 2) +
+        pow(g - colorNames[i].getGreen, 2) +
+        pow(b - colorNames[i].getBlue, 2);
+    ndf2 = pow(h - colorNames[i].getHue, 2) +
+        pow(s - colorNames[i].getSaturation, 2) +
+        pow(l - colorNames[i].getLightness, 2);
+    ndf = ndf1 + ndf2 * 2;
+    if (df < 0 || df > ndf) {
+      df = ndf;
+      cl = i;
+    }
+  }
+
+  return cl < 0
+      ? new MyColor(Colors.white, 'Color [$color] not found!')
+      : colorNames[cl];
+}
+
+///
+/// Class for getting name of current color
+/// pass color code in hex value and get closest color name
+/// contains ~1500 color names
+///
+/// Dart port of: http://chir.ag/projects/ntc
+///
+
+class MyColor {
+  final Color _color;
+
+  final String _name;
+  final HSLColor _hslColor;
+  MyColor(this._color, this._name) : _hslColor = HSLColor.fromColor(_color);
+
+  int get getBlue => _color.blue;
+  String get getCode => _color.value.toRadixString(16);
+  int get getGreen => _color.green;
+  int get getHue => _hslColor.hue.toInt();
+  int get getLightness => (_hslColor.lightness * 100).toInt();
+  String get getName => _name;
+  int get getRed => _color.red;
+  int get getSaturation => (_hslColor.saturation * 100).toInt();
+}
