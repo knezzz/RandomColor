@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 import 'package:random_color/random_color.dart';
 
@@ -60,25 +60,25 @@ void main() {
     final RandomColor rc = RandomColor();
 
     final Color _redColor = rc.randomColor(
-        colorHue: ColorHue.custom(hueRange: Range.zero()),
+        colorHue: ColorHue.custom(Range.zero()),
         colorSaturation:
-            ColorSaturation.custom(saturationRange: Range.staticValue(100)),
+            ColorSaturation.custom(Range.staticValue(100)),
         colorBrightness:
-            ColorBrightness.custom(brightnessRange: Range.staticValue(50)));
+            ColorBrightness.custom(Range.staticValue(50)));
 
     final Color _greenColor = rc.randomColor(
-        colorHue: ColorHue.custom(hueRange: Range.staticValue(120)),
+        colorHue: ColorHue.custom(Range.staticValue(120)),
         colorSaturation:
-            ColorSaturation.custom(saturationRange: Range.staticValue(100)),
+            ColorSaturation.custom(Range.staticValue(100)),
         colorBrightness:
-            ColorBrightness.custom(brightnessRange: Range.staticValue(50)));
+            ColorBrightness.custom(Range.staticValue(50)));
 
     final Color _blueColor = rc.randomColor(
-        colorHue: ColorHue.custom(hueRange: Range.staticValue(240)),
+        colorHue: ColorHue.custom(Range.staticValue(240)),
         colorSaturation:
-            ColorSaturation.custom(saturationRange: Range.staticValue(100)),
+            ColorSaturation.custom(Range.staticValue(100)),
         colorBrightness:
-            ColorBrightness.custom(brightnessRange: Range.staticValue(50)));
+            ColorBrightness.custom(Range.staticValue(50)));
 
     expect(getColorNameFromColor(_redColor).getName.toLowerCase(), 'red');
     expect(getColorNameFromColor(_greenColor).getName.toLowerCase(), 'green');

@@ -1,3 +1,12 @@
+## [1.0.1] - TODO: 2018.10.17
+
+* Remove test dependency
+* Add description
+* Add randomColors function that returns lost of random colors
+* Change named parameter from ColorHue.custom() to required unnamed parameter
+* Change named parameter from ColorSaturation.custom() to required unnamed parameter
+* Change named parameter from ColorBrightness.custom() to required unnamed parameter
+
 ## [1.0.0] - TODO: 2018.10.17
 
 * Initial release

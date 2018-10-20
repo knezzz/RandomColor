@@ -63,6 +63,27 @@ class RandomColor {
     return _getColor(h, s, b);
   }
 
+  List<Color> randomColors({
+    @required int count,
+    ColorHue colorHue,
+    ColorSaturation colorSaturation,
+    ColorBrightness colorBrightness,
+    bool debug = true,
+  }) {
+    final List<Color> colors = <Color>[];
+
+    for(int i = 0; i < count; i++){
+      colors.add(randomColor(
+        colorHue: colorHue,
+        colorSaturation: colorSaturation,
+        colorBrightness: colorBrightness,
+        debug: debug
+      ));
+    }
+
+    return colors;
+  }
+
   /// Need to get RGB from hsv values and make new color from them.
   /// Ported to dart from: https://stackoverflow.com/a/25964657/3700909
   Color _getColor(int hue, int saturation, int brightness) {
