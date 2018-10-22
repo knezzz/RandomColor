@@ -11,10 +11,10 @@ part of random_color;
 /// Generate random colors that are visually appealing
 ///
 class RandomColor {
-  /// Accepts seed for random generator as a parameter
+  /// Constructor for random generator
+  /// [seed] Random seed to use for generating colors
   RandomColor([int seed]) {
     if (seed != null) {
-      print('Seed for random color: $seed');
       _random = new Random(seed);
     }
 
@@ -31,16 +31,16 @@ class RandomColor {
   /// Get random color
   ///
   /// Optional arguments:
-  /// [hueType] - get wanted color range
-  /// [value] - get specific hue level colors
-  /// [saturationType] - get specific saturation type colors
-  /// [brightnessType] - get specific brightness colors
+  /// [colorHue] Random color hue [Range] to use
+  /// [colorSaturation] Random color saturation [Range]
+  /// [colorBrightness] Random color brightness [Range]
+  /// [debug] debug color creation. defaults to false
   ///
   Color randomColor({
     ColorHue colorHue,
     ColorSaturation colorSaturation,
     ColorBrightness colorBrightness,
-    bool debug = true,
+    bool debug = false,
   }) {
     colorHue ??= ColorHue.random;
     colorSaturation ??= ColorSaturation.random;
@@ -63,12 +63,15 @@ class RandomColor {
     return _getColor(h, s, b);
   }
 
+  /// Get list of random colors
+  /// Calls [randomColor] for [count] number of times.
+  /// [count] Number of colors
   List<Color> randomColors({
     @required int count,
     ColorHue colorHue,
     ColorSaturation colorSaturation,
     ColorBrightness colorBrightness,
-    bool debug = true,
+    bool debug = false,
   }) {
     final List<Color> colors = <Color>[];
 
