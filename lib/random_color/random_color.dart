@@ -72,13 +72,12 @@ class RandomColor {
   }) {
     final List<Color> colors = <Color>[];
 
-    for(int i = 0; i < count; i++){
+    for (int i = 0; i < count; i++) {
       colors.add(randomColor(
-        colorHue: colorHue,
-        colorSaturation: colorSaturation,
-        colorBrightness: colorBrightness,
-        debug: debug
-      ));
+          colorHue: colorHue,
+          colorSaturation: colorSaturation,
+          colorBrightness: colorBrightness,
+          debug: debug));
     }
 
     return colors;

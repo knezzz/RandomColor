@@ -24,7 +24,7 @@ class ColorBrightness {
       0);
   final Range _brightness;
   final int type;
-  const ColorBrightness.custom(@required Range brightnessRange)
+  const ColorBrightness.custom(Range brightnessRange)
       : _brightness = brightnessRange,
         type = -1;
 
@@ -72,7 +72,7 @@ class ColorHue {
   static ColorHue get yellow => ColorHue._(Range(40, 60), 2);
   final Range _hue;
   final int type;
-  const ColorHue.custom(@required Range hueRange)
+  const ColorHue.custom(Range hueRange)
       : _hue = hueRange,
         type = -1;
   const ColorHue._(this._hue, this.type);
@@ -139,7 +139,7 @@ class ColorSaturation {
       ];
   final Range _saturation;
   final int type;
-  const ColorSaturation.custom(@required Range saturationRange)
+  const ColorSaturation.custom(Range saturationRange)
       : _saturation = saturationRange,
         type = -1;
 

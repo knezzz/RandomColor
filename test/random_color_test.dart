@@ -61,24 +61,18 @@ void main() {
 
     final Color _redColor = rc.randomColor(
         colorHue: ColorHue.custom(Range.zero()),
-        colorSaturation:
-            ColorSaturation.custom(Range.staticValue(100)),
-        colorBrightness:
-            ColorBrightness.custom(Range.staticValue(50)));
+        colorSaturation: ColorSaturation.custom(Range.staticValue(100)),
+        colorBrightness: ColorBrightness.custom(Range.staticValue(50)));
 
     final Color _greenColor = rc.randomColor(
         colorHue: ColorHue.custom(Range.staticValue(120)),
-        colorSaturation:
-            ColorSaturation.custom(Range.staticValue(100)),
-        colorBrightness:
-            ColorBrightness.custom(Range.staticValue(50)));
+        colorSaturation: ColorSaturation.custom(Range.staticValue(100)),
+        colorBrightness: ColorBrightness.custom(Range.staticValue(50)));
 
     final Color _blueColor = rc.randomColor(
         colorHue: ColorHue.custom(Range.staticValue(240)),
-        colorSaturation:
-            ColorSaturation.custom(Range.staticValue(100)),
-        colorBrightness:
-            ColorBrightness.custom(Range.staticValue(50)));
+        colorSaturation: ColorSaturation.custom(Range.staticValue(100)),
+        colorBrightness: ColorBrightness.custom(Range.staticValue(50)));
 
     expect(getColorNameFromColor(_redColor).getName.toLowerCase(), 'red');
     expect(getColorNameFromColor(_greenColor).getName.toLowerCase(), 'green');

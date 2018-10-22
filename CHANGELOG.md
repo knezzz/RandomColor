@@ -1,4 +1,8 @@
-## [1.0.1] - TODO: 2018.10.17
+## [1.0.1] - 2018.10.20
+
+* Update description
+
+## [1.0.1] - 2018.10.17
 
 * Remove test dependency
 * Add description

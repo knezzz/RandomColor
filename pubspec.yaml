@@ -1,6 +1,6 @@
 name: random_color
-description: Generate random colors from hue, saturation and brightness that are visualy appearing. You can chose exact color specifications. Choosing all 3 variables as staticValue range will remove random factor and color will be exactly the same with every seed.
-version: 1.0.1
+description: Generate random colors from hue, saturation and brightness that are visualy appearing. You can chose exact color specifications.
+version: 1.0.2
 author: Luka Knezic <luka.knezic@gmail.com>
 homepage: https://github.com/knezzz/RandomColor
 
