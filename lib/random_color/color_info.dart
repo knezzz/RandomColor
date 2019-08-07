@@ -4,22 +4,22 @@ class ColorBrightness {
   static const int minBrightness = 16;
   static const int maxBrightness = 84;
 
-  static ColorBrightness get dark =>
-      ColorBrightness._(Range(minBrightness, minBrightness + 30), 3);
-  static ColorBrightness get light => ColorBrightness._(
-      Range(((maxBrightness + minBrightness) / 2).round(), maxBrightness), 1);
+  static const ColorBrightness dark = ColorBrightness._(Range(minBrightness, minBrightness + 30), 3);
+  static const ColorBrightness light = ColorBrightness._(Range(
+          ((maxBrightness + minBrightness) ~/ 2), maxBrightness), 1);
 
-  static ColorBrightness get primary =>
+  static const ColorBrightness primary =
       ColorBrightness._(Range(minBrightness + 20, maxBrightness - 20), 2);
-  static ColorBrightness get random =>
+  static const ColorBrightness random =
       ColorBrightness._(Range(minBrightness, maxBrightness), 5);
 
-  static List<ColorBrightness> get values =>
+  static const List<ColorBrightness> values =
       <ColorBrightness>[veryLight, light, primary, dark, veryDark, random];
-  static ColorBrightness get veryDark =>
+  static const ColorBrightness veryDark =
       ColorBrightness._(Range(minBrightness ~/ 2, minBrightness + 30), 4);
-  static ColorBrightness get veryLight => ColorBrightness._(
-      Range(((maxBrightness + minBrightness) / 2).round(),
+  static const ColorBrightness veryLight = ColorBrightness._(
+      Range(
+          ((maxBrightness + minBrightness) ~/ 2),
           maxBrightness + (minBrightness ~/ 2)),
       0);
   final Range _brightness;
@@ -53,23 +53,42 @@ class ColorBrightness {
 
     return 'custom';
   }
+
+  static ColorBrightness multiple(
+      {@required List<ColorBrightness> colorBrightnessList, Random random}) {
+    colorBrightnessList.shuffle(random);
+    return colorBrightnessList.first;
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is ColorBrightness &&
+              runtimeType == other.runtimeType &&
+              _brightness == other._brightness &&
+              type == other.type;
+
+  @override
+  int get hashCode =>
+      _brightness.hashCode ^
+      type.hashCode;
 }
 
 class ColorHue {
-  static ColorHue get blue => ColorHue._(Range(180, 240), 4);
+  static const ColorHue blue = ColorHue._(Range(180, 240), 4);
 
-  static ColorHue get green => ColorHue._(Range(60, 180), 3);
+  static const ColorHue green = ColorHue._(Range(60, 180), 3);
 
-  static ColorHue get orange => ColorHue._(Range(10, 40), 1);
+  static const ColorHue orange = ColorHue._(Range(10, 40), 1);
 
-  static ColorHue get pink => ColorHue._(Range(315, 355), 6);
-  static ColorHue get purple => ColorHue._(Range(240, 315), 5);
+  static const ColorHue pink = ColorHue._(Range(315, 355), 6);
+  static const ColorHue purple = ColorHue._(Range(240, 315), 5);
 
-  static ColorHue get random => ColorHue._(Range(0, 360), 7);
-  static ColorHue get red => ColorHue._(Range(-5, 10), 0);
-  static List<ColorHue> get values =>
+  static const ColorHue random = ColorHue._(Range(0, 360), 7);
+  static const ColorHue red = ColorHue._(Range(-5, 10), 0);
+  static const List<ColorHue> values =
       <ColorHue>[red, orange, yellow, green, blue, purple, pink, random];
-  static ColorHue get yellow => ColorHue._(Range(40, 60), 2);
+  static const ColorHue yellow = ColorHue._(Range(40, 60), 2);
   final Range _hue;
   final int type;
   const ColorHue.custom(Range hueRange)
@@ -116,21 +135,34 @@ class ColorHue {
     colorHues.shuffle(random);
     return colorHues.first;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is ColorHue &&
+              runtimeType == other.runtimeType &&
+              _hue == other._hue &&
+              type == other.type;
+
+  @override
+  int get hashCode =>
+      _hue.hashCode ^
+      type.hashCode;
 }
 
 class ColorSaturation {
-  static ColorSaturation get highSaturation =>
+  static const ColorSaturation highSaturation =
       ColorSaturation._(Range(80, 100), 2);
 
-  static ColorSaturation get lowSaturation =>
+  static const ColorSaturation lowSaturation =
       ColorSaturation._(Range(0, 40), 0);
 
-  static ColorSaturation get mediumSaturation =>
+  static const ColorSaturation mediumSaturation =
       ColorSaturation._(Range(40, 80), 1);
-  static ColorSaturation get monochrome => ColorSaturation._(Range.zero(), 4);
+  static const ColorSaturation monochrome = ColorSaturation._(Range.zero(), 4);
 
-  static ColorSaturation get random => ColorSaturation._(Range(20, 100), 3);
-  static List<ColorSaturation> get values => <ColorSaturation>[
+  static const ColorSaturation random = ColorSaturation._(Range(20, 100), 3);
+  static const List<ColorSaturation> values = <ColorSaturation>[
         lowSaturation,
         mediumSaturation,
         highSaturation,
@@ -166,26 +198,42 @@ class ColorSaturation {
 
     return 'custom';
   }
+  static ColorSaturation multiple(
+      {@required List<ColorSaturation> colorSaturations, Random random}) {
+    colorSaturations.shuffle(random);
+    return colorSaturations.first;
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is ColorSaturation &&
+              runtimeType == other.runtimeType &&
+              _saturation == other._saturation &&
+              type == other.type;
+
+  @override
+  int get hashCode =>
+      _saturation.hashCode ^
+      type.hashCode;
 }
 
 class Range {
-  int start;
+  final int start;
 
-  int end;
+  final int end;
 
-  Range(this.start, this.end);
+  const Range(this.start, this.end);
 
-  Range.staticValue(int value)
+  const Range.staticValue(int value)
       : start = value,
         end = value;
-  Range.zero()
+  const Range.zero()
       : start = 0,
         end = 0;
 
   Range operator +(Range range) {
-    start = (start + range.start) ~/ 2;
-
-    return this;
+    return Range((start + range.start) ~/ 2, end);
   }
 
   bool contain(int value) {
@@ -195,4 +243,17 @@ class Range {
   int randomWithin(Random random) {
     return (start + random.nextDouble() * (end - start)).round();
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Range &&
+              runtimeType == other.runtimeType &&
+              start == other.start &&
+              end == other.end;
+
+  @override
+  int get hashCode =>
+      start.hashCode ^
+      end.hashCode;
 }
