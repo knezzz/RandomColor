@@ -55,8 +55,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget _showColors() {
     return GridView.builder(
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         Color _color;
@@ -84,34 +83,124 @@ class _MyAppState extends State<MyApp> {
           }
         }
 
-        return Card(
-          color: _color,
-          child: Container(
-            margin: const EdgeInsets.all(12.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    getColorNameFromColor(_color).getName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .title
-                        .copyWith(fontSize: 13.0, color: getTextColor()),
+        return InkWell(
+          onTap: () {
+            showDialog<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  MaterialColor _mc = RandomColor().randomMaterialColor(
+                      colorHue: ColorHue.custom(Range.staticValue(HSLColor.fromColor(_color).hue.toInt())),
+                      colorSaturation: _colorSaturation);
+
+                  return Dialog(
+                    child: Column(
+                      children: <Widget>[
+                        Text('Material color'),
+                        Column(
+                          children: <Widget>[
+                            Container(
+                              height: 50.0,
+                              color: _mc.shade50,
+                              child: Center(
+                                child: Text('50'),
+                              ),
+                            ),
+                            Container(
+                              height: 50.0,
+                              color: _mc.shade100,
+                              child: Center(
+                                child: Text('100'),
+                              ),
+                            ),
+                            Container(
+                              height: 50.0,
+                              color: _mc.shade200,
+                              child: Center(
+                                child: Text('200'),
+                              ),
+                            ),
+                            Container(
+                              height: 50.0,
+                              color: _mc.shade300,
+                              child: Center(
+                                child: Text('300'),
+                              ),
+                            ),
+                            Container(
+                              height: 50.0,
+                              color: _mc.shade400,
+                              child: Center(
+                                child: Text('400'),
+                              ),
+                            ),
+                            Container(
+                              height: 80.0,
+                              color: _mc.shade500,
+                              child: Center(
+                                child: Text('500 - Base'),
+                              ),
+                            ),
+                            Container(
+                              height: 50.0,
+                              color: _mc.shade600,
+                              child: Center(
+                                child: Text('600'),
+                              ),
+                            ),
+                            Container(
+                              height: 50.0,
+                              color: _mc.shade700,
+                              child: Center(
+                                child: Text('700'),
+                              ),
+                            ),
+                            Container(
+                              height: 50.0,
+                              color: _mc.shade800,
+                              child: Center(
+                                child: Text('800'),
+                              ),
+                            ),
+                            Container(
+                              height: 50.0,
+                              color: _mc.shade900,
+                              child: Center(
+                                child: Text('900'),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                });
+          },
+          child: Card(
+            color: _color,
+            child: Container(
+              margin: const EdgeInsets.all(12.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      getColorNameFromColor(_color).getName,
+                      style: Theme.of(context).textTheme.title.copyWith(fontSize: 13.0, color: getTextColor()),
+                    ),
                   ),
-                ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    '#${_color.value.toRadixString(16).toUpperCase()}',
-                    style: Theme.of(context).textTheme.caption.copyWith(
-                        color: getTextColor(),
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w300),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      '#${_color.value.toRadixString(16).toUpperCase()}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(color: getTextColor(), fontSize: 16.0, fontWeight: FontWeight.w300),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -206,8 +295,7 @@ class _FilterDialogState extends State<FilterDialog> {
                 shrinkWrap: true,
                 itemCount: ColorHue.values.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final ColorHue _hue = _hueType.firstWhere(
-                      (ColorHue hue) => hue.type == ColorHue.values[index].type,
+                  final ColorHue _hue = _hueType.firstWhere((ColorHue hue) => hue.type == ColorHue.values[index].type,
                       orElse: () => null);
                   final Color _color = RandomColor(8).randomColor(
                       colorHue: ColorHue.values[index],
@@ -241,8 +329,7 @@ class _FilterDialogState extends State<FilterDialog> {
                                       _addColorHue(ColorHue.values[index]);
                                     }
 
-                                    _hueType.removeWhere(
-                                        (ColorHue hue) => hue == null);
+                                    _hueType.removeWhere((ColorHue hue) => hue == null);
                                     widget.hueTypeChange(_hueType);
                                   },
                                 )
@@ -271,15 +358,13 @@ class _FilterDialogState extends State<FilterDialog> {
             DropdownButton<int>(
               value: _colorLuminosity.type,
               onChanged: (int luminosity) {
-                setState(() =>
-                    _colorLuminosity = ColorBrightness.values[luminosity]);
+                setState(() => _colorLuminosity = ColorBrightness.values[luminosity]);
 
                 widget.luminosityTypeChange(_colorLuminosity);
               },
               items: ColorBrightness.values
-                  .map((ColorBrightness l) => DropdownMenuItem<int>(
-                      child: Container(child: Text(l.toString())),
-                      value: l.type))
+                  .map((ColorBrightness l) =>
+                      DropdownMenuItem<int>(child: Container(child: Text(l.toString())), value: l.type))
                   .toList(),
             )
           ],
@@ -297,15 +382,13 @@ class _FilterDialogState extends State<FilterDialog> {
             DropdownButton<int>(
               value: _colorSaturation.type,
               onChanged: (int saturation) {
-                setState(() =>
-                    _colorSaturation = ColorSaturation.values[saturation]);
+                setState(() => _colorSaturation = ColorSaturation.values[saturation]);
 
                 widget.saturationTypeChange(_colorSaturation);
               },
               items: ColorSaturation.values
-                  .map((ColorSaturation cf) => DropdownMenuItem<int>(
-                      child: Container(child: Text(cf.toString())),
-                      value: cf.type))
+                  .map((ColorSaturation cf) =>
+                      DropdownMenuItem<int>(child: Container(child: Text(cf.toString())), value: cf.type))
                   .toList(),
             )
           ],
