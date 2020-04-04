@@ -37,15 +37,11 @@ class RandomColor {
   /// [debug] debug color creation. defaults to false
   ///
   Color randomColor({
-    ColorHue colorHue,
-    ColorSaturation colorSaturation,
-    ColorBrightness colorBrightness,
+    ColorHue colorHue = ColorHue.random,
+    ColorSaturation colorSaturation = ColorSaturation.random,
+    ColorBrightness colorBrightness = ColorBrightness.random,
     bool debug = false,
   }) {
-    colorHue ??= ColorHue.random;
-    colorSaturation ??= ColorSaturation.random;
-    colorBrightness ??= ColorBrightness.random;
-
     this.debug = debug;
 
     int s;
@@ -63,6 +59,45 @@ class RandomColor {
     return _getColor(h, s, b);
   }
 
+  MaterialColor randomMaterialColor(
+      {ColorHue colorHue = ColorHue.random,
+      ColorSaturation colorSaturation = ColorSaturation.random,
+      bool debug = false}) {
+    int saturation;
+    int hue;
+    int brightness;
+
+    hue = colorHue.returnHue(_random);
+    saturation = colorSaturation.returnSaturation(_random);
+    brightness = const ColorBrightness.custom(Range(45, 55)).returnBrightness(_random);
+
+    /// Middle color
+    final Color _baseColor = _getColor(hue, saturation, brightness);
+
+    Color _getLighterColor(int lighterShade) {
+      return _getColor(hue, saturation, brightness + (lighterShade * 5));
+    }
+
+    Color _getDarkerColor(int darkerShade) {
+      return _getColor(hue, saturation, brightness - (darkerShade * 5));
+    }
+
+    final MaterialColor _finishedColor = MaterialColor(_baseColor.value, <int, Color>{
+      50: _getLighterColor(5),
+      100: _getLighterColor(4),
+      200: _getLighterColor(3),
+      300: _getLighterColor(2),
+      400: _getLighterColor(1),
+      500: _baseColor,
+      600: _getDarkerColor(1),
+      700: _getDarkerColor(2),
+      800: _getDarkerColor(3),
+      900: _getDarkerColor(4),
+    });
+
+    return _finishedColor;
+  }
+
   /// Get list of random colors
   /// Calls [randomColor] for [count] number of times.
   /// [count] Number of colors
@@ -77,10 +112,7 @@ class RandomColor {
 
     for (int i = 0; i < count; i++) {
       colors.add(randomColor(
-          colorHue: colorHue,
-          colorSaturation: colorSaturation,
-          colorBrightness: colorBrightness,
-          debug: debug));
+          colorHue: colorHue, colorSaturation: colorSaturation, colorBrightness: colorBrightness, debug: debug));
     }
 
     return colors;
