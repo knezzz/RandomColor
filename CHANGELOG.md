@@ -1,3 +1,8 @@
+## [1.0.5] - 2020.04.04
+
+* BREAKING CHANGE: Range + (addition) will no longer mutate the object but return new instance of the object (range is const now)
+* Added == and hashcode to color saturation, brightness and hue.
+
 ## [1.0.4] - 2019.08.16
 
 * BREAKING CHANGE: Range + (addition) will no longer mutate the object but return new instance of the object (range is const now)

@@ -1,11 +1,10 @@
 name: random_color
 description: Generate random colors from hue, saturation and brightness that are visualy appearing. You can chose exact color specifications.
-version: 1.0.3
-author: Luka Knezic <luka.knezic@gmail.com>
+version: 1.0.5
 homepage: https://github.com/knezzz/RandomColor
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
   flutter:
