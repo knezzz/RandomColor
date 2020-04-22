@@ -1584,8 +1584,9 @@ MyColor getColorNameFromColor(Color color) {
 
 MyColor getColorNameFromString(String color) {
   color = color.toUpperCase();
-  if (color.length < 3 || color.length > 6)
+  if (color.length < 3 || color.length > 6) {
     return new MyColor(Colors.white, 'Invalid color $color');
+  }
 
   if (color.length == 3)
     color = color.substring(0, 1) +
@@ -1607,11 +1608,11 @@ MyColor getColorNameFromString(String color) {
 
   int ndf1, ndf2, ndf, df = -1, cl = -1;
   for (int i = 0; i < colorNames.length; i++) {
-    if (color == colorNames[i].getCode) return colorNames[i];
+    if (color == colorNames[i].getCode) {
+      return colorNames[i];
+    }
 
-    ndf1 = pow(r - colorNames[i].getRed, 2) +
-        pow(g - colorNames[i].getGreen, 2) +
-        pow(b - colorNames[i].getBlue, 2);
+    ndf1 = pow(r - colorNames[i].getRed, 2) + pow(g - colorNames[i].getGreen, 2) + pow(b - colorNames[i].getBlue, 2);
     ndf2 = pow(h - colorNames[i].getHue, 2) +
         pow(s - colorNames[i].getSaturation, 2) +
         pow(l - colorNames[i].getLightness, 2);
@@ -1622,9 +1623,7 @@ MyColor getColorNameFromString(String color) {
     }
   }
 
-  return cl < 0
-      ? new MyColor(Colors.white, 'Color [$color] not found!')
-      : colorNames[cl];
+  return cl < 0 ? new MyColor(Colors.white, 'Color [$color] not found!') : colorNames[cl];
 }
 
 ///
@@ -1635,12 +1634,13 @@ MyColor getColorNameFromString(String color) {
 /// Dart port of: http://chir.ag/projects/ntc
 ///
 
+@immutable
 class MyColor {
-  final Color _color;
+  MyColor(this._color, this._name) : _hslColor = HSLColor.fromColor(_color);
 
+  final Color _color;
   final String _name;
   final HSLColor _hslColor;
-  MyColor(this._color, this._name) : _hslColor = HSLColor.fromColor(_color);
 
   int get getBlue => _color.blue;
   String get getCode => _color.value.toRadixString(16);
