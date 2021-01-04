@@ -1,11 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 
-void main() => runApp(MaterialApp(home: new MyApp()));
+void main() => runApp(MaterialApp(home: MyApp()));
 
 class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => new _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -24,8 +25,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: const Text('Example of Random colors library'),
       ),
       body: Container(child: _showColors()),
@@ -34,7 +35,7 @@ class _MyAppState extends State<MyApp> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: new FloatingActionButton(
+            child: FloatingActionButton(
               tooltip: 'RefreshColors',
               child: const Icon(Icons.refresh),
               onPressed: _updateColor,
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: new FloatingActionButton(
+            child: FloatingActionButton(
               tooltip: 'Filter',
               child: const Icon(Icons.filter_list),
               onPressed: _showFilterDialog,
@@ -55,7 +56,8 @@ class _MyAppState extends State<MyApp> {
 
   Widget _showColors() {
     return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+      gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         Color _color;
@@ -72,10 +74,6 @@ class _MyAppState extends State<MyApp> {
         }
 
         Color getTextColor() {
-          if (_color == null) {
-            return Colors.black;
-          }
-
           if (_color.computeLuminance() > 0.3) {
             return Colors.black;
           } else {
@@ -88,8 +86,9 @@ class _MyAppState extends State<MyApp> {
             showDialog<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  MaterialColor _mc = RandomColor().randomMaterialColor(
-                      colorHue: ColorHue.custom(Range.staticValue(HSLColor.fromColor(_color).hue.toInt())),
+                  final _mc = RandomColor().randomMaterialColor(
+                      colorHue: ColorHue.custom(Range.staticValue(
+                          HSLColor.fromColor(_color).hue.toInt())),
                       colorSaturation: _colorSaturation);
 
                   return Dialog(
@@ -186,17 +185,20 @@ class _MyAppState extends State<MyApp> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       getColorNameFromColor(_color).getName,
-                      style: Theme.of(context).textTheme.title.copyWith(fontSize: 13.0, color: getTextColor()),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6!
+                          .copyWith(fontSize: 13.0, color: getTextColor()),
                     ),
                   ),
                   Container(
                     alignment: Alignment.centerRight,
                     child: Text(
                       '#${_color.value.toRadixString(16).toUpperCase()}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption
-                          .copyWith(color: getTextColor(), fontSize: 16.0, fontWeight: FontWeight.w300),
+                      style: Theme.of(context).textTheme.caption!.copyWith(
+                          color: getTextColor(),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w300),
                     ),
                   ),
                 ],
@@ -235,19 +237,19 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-typedef void HueTypeChange(List<ColorHue> colorHues);
-typedef void SaturationTypeChange(ColorSaturation colorSaturation);
-typedef void LuminosityTypeChange(ColorBrightness colorBrightness);
+typedef HueTypeChange = void Function(List<ColorHue> colorHues);
+typedef SaturationTypeChange = void Function(ColorSaturation colorSaturation);
+typedef LuminosityTypeChange = void Function(ColorBrightness colorBrightness);
 
 class FilterDialog extends StatefulWidget {
   FilterDialog({
-    Key key,
-    this.hueType,
-    this.colorSaturation,
-    this.colorLuminosity,
-    this.hueTypeChange,
-    this.saturationTypeChange,
-    this.luminosityTypeChange,
+    Key? key,
+    required this.hueType,
+    required this.colorSaturation,
+    required this.colorLuminosity,
+    required this.hueTypeChange,
+    required this.saturationTypeChange,
+    required this.luminosityTypeChange,
   }) : super(key: key);
 
   final List<ColorHue> hueType;
@@ -259,13 +261,13 @@ class FilterDialog extends StatefulWidget {
   final LuminosityTypeChange luminosityTypeChange;
 
   @override
-  _FilterDialogState createState() => new _FilterDialogState();
+  _FilterDialogState createState() => _FilterDialogState();
 }
 
 class _FilterDialogState extends State<FilterDialog> {
   final List<ColorHue> _hueType = <ColorHue>[];
-  ColorBrightness _colorLuminosity;
-  ColorSaturation _colorSaturation;
+  late ColorBrightness _colorLuminosity;
+  late ColorSaturation _colorSaturation;
 
   @override
   void initState() {
@@ -295,9 +297,9 @@ class _FilterDialogState extends State<FilterDialog> {
                 shrinkWrap: true,
                 itemCount: ColorHue.values.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final ColorHue _hue = _hueType.firstWhere((ColorHue hue) => hue.type == ColorHue.values[index].type,
-                      orElse: () => null);
-                  final Color _color = RandomColor(8).randomColor(
+                  final _hue = _hueType.firstWhereOrNull((ColorHue hue) =>
+                      hue.type == ColorHue.values[index].type);
+                  final _color = RandomColor(8).randomColor(
                       colorHue: ColorHue.values[index],
                       colorSaturation: _colorSaturation,
                       colorBrightness: _colorLuminosity);
@@ -322,14 +324,15 @@ class _FilterDialogState extends State<FilterDialog> {
                                 Text(ColorHue.values[index].toString()),
                                 Checkbox(
                                   value: _hue != null,
-                                  onChanged: (bool value) {
+                                  onChanged: (bool? value) {
                                     if (_hue != null) {
                                       _removeColorHue(_hue);
                                     } else {
                                       _addColorHue(ColorHue.values[index]);
                                     }
 
-                                    _hueType.removeWhere((ColorHue hue) => hue == null);
+                                    _hueType.removeWhere(
+                                        (ColorHue? hue) => hue == null);
                                     widget.hueTypeChange(_hueType);
                                   },
                                 )
@@ -357,14 +360,18 @@ class _FilterDialogState extends State<FilterDialog> {
             ),
             DropdownButton<int>(
               value: _colorLuminosity.type,
-              onChanged: (int luminosity) {
-                setState(() => _colorLuminosity = ColorBrightness.values[luminosity]);
+              onChanged: (int? luminosity) {
+                if (luminosity != null) {
+                  setState(() =>
+                      _colorLuminosity = ColorBrightness.values[luminosity]);
 
-                widget.luminosityTypeChange(_colorLuminosity);
+                  widget.luminosityTypeChange(_colorLuminosity);
+                }
               },
               items: ColorBrightness.values
-                  .map((ColorBrightness l) =>
-                      DropdownMenuItem<int>(child: Container(child: Text(l.toString())), value: l.type))
+                  .map((ColorBrightness l) => DropdownMenuItem<int>(
+                      child: Container(child: Text(l.toString())),
+                      value: l.type))
                   .toList(),
             )
           ],
@@ -381,14 +388,18 @@ class _FilterDialogState extends State<FilterDialog> {
             ),
             DropdownButton<int>(
               value: _colorSaturation.type,
-              onChanged: (int saturation) {
-                setState(() => _colorSaturation = ColorSaturation.values[saturation]);
+              onChanged: (int? saturation) {
+                if (saturation != null) {
+                  setState(() =>
+                      _colorSaturation = ColorSaturation.values[saturation]);
 
-                widget.saturationTypeChange(_colorSaturation);
+                  widget.saturationTypeChange(_colorSaturation);
+                }
               },
               items: ColorSaturation.values
-                  .map((ColorSaturation cf) =>
-                      DropdownMenuItem<int>(child: Container(child: Text(cf.toString())), value: cf.type))
+                  .map((ColorSaturation cf) => DropdownMenuItem<int>(
+                      child: Container(child: Text(cf.toString())),
+                      value: cf.type))
                   .toList(),
             )
           ],
