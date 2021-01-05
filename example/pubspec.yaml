@@ -9,10 +9,16 @@ description: A new Flutter project.
 # Read more about versioning at semver.org.
 version: 1.0.0+1
 
+publish_to: none
+
+environment:
+  sdk: '>=2.12.0-0 <3.0.0'
+
 dependencies:
   flutter:
     sdk: flutter
 
+  collection: ^1.15.0-nullsafety.5
   random_color:
     path: ../
   # The following adds the Cupertino Icons font to your application.
@@ -22,6 +28,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+    
+  pedantic: ^1.10.0-nullsafety
 
 
 # For information on the generic Dart part of this file, see the
