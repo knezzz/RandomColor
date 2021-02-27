@@ -16,9 +16,9 @@ class RandomColor {
   RandomColor([int? seed]) {
     if (seed != null) {
       _random = Random(seed);
+    } else {
+      _random = Random();
     }
-
-    _random = Random();
   }
 
   bool debug = false;
@@ -59,10 +59,11 @@ class RandomColor {
     return _getColor(h, s, b);
   }
 
-  MaterialColor randomMaterialColor(
-      {ColorHue colorHue = ColorHue.random,
-      ColorSaturation colorSaturation = ColorSaturation.random,
-      bool debug = false}) {
+  MaterialColor randomMaterialColor({
+    ColorHue colorHue = ColorHue.random,
+    ColorSaturation colorSaturation = ColorSaturation.random,
+    bool debug = false,
+  }) {
     int saturation;
     int hue;
     int brightness;
@@ -113,10 +114,11 @@ class RandomColor {
 
     for (var i = 0; i < count; i++) {
       colors.add(randomColor(
-          colorHue: colorHue,
-          colorSaturation: colorSaturation,
-          colorBrightness: colorBrightness,
-          debug: debug));
+        colorHue: colorHue,
+        colorSaturation: colorSaturation,
+        colorBrightness: colorBrightness,
+        debug: debug,
+      ));
     }
 
     return colors;

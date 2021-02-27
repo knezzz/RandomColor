@@ -1637,12 +1637,13 @@ MyColor getColorNameFromString(String color) {
 /// Dart port of: http://chir.ag/projects/ntc
 ///
 
+@immutable
 class MyColor {
-  final Color _color;
+  MyColor(this._color, this._name) : _hslColor = HSLColor.fromColor(_color);
 
+  final Color _color;
   final String _name;
   final HSLColor _hslColor;
-  MyColor(this._color, this._name) : _hslColor = HSLColor.fromColor(_color);
 
   int get getBlue => _color.blue;
   String get getCode => _color.value.toRadixString(16);

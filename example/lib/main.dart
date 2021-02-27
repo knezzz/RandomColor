@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 
@@ -86,7 +85,7 @@ class _MyAppState extends State<MyApp> {
             showDialog<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  final _mc = RandomColor().randomMaterialColor(
+                  final MaterialColor _mc = RandomColor().randomMaterialColor(
                       colorHue: ColorHue.custom(Range.staticValue(
                           HSLColor.fromColor(_color).hue.toInt())),
                       colorSaturation: _colorSaturation);
@@ -94,76 +93,76 @@ class _MyAppState extends State<MyApp> {
                   return Dialog(
                     child: Column(
                       children: <Widget>[
-                        Text('Material color'),
+                        const Text('Material color'),
                         Column(
                           children: <Widget>[
                             Container(
                               height: 50.0,
                               color: _mc.shade50,
-                              child: Center(
+                              child: const Center(
                                 child: Text('50'),
                               ),
                             ),
                             Container(
                               height: 50.0,
                               color: _mc.shade100,
-                              child: Center(
+                              child: const Center(
                                 child: Text('100'),
                               ),
                             ),
                             Container(
                               height: 50.0,
                               color: _mc.shade200,
-                              child: Center(
+                              child: const Center(
                                 child: Text('200'),
                               ),
                             ),
                             Container(
                               height: 50.0,
                               color: _mc.shade300,
-                              child: Center(
+                              child: const Center(
                                 child: Text('300'),
                               ),
                             ),
                             Container(
                               height: 50.0,
                               color: _mc.shade400,
-                              child: Center(
+                              child: const Center(
                                 child: Text('400'),
                               ),
                             ),
                             Container(
                               height: 80.0,
                               color: _mc.shade500,
-                              child: Center(
+                              child: const Center(
                                 child: Text('500 - Base'),
                               ),
                             ),
                             Container(
                               height: 50.0,
                               color: _mc.shade600,
-                              child: Center(
+                              child: const Center(
                                 child: Text('600'),
                               ),
                             ),
                             Container(
                               height: 50.0,
                               color: _mc.shade700,
-                              child: Center(
+                              child: const Center(
                                 child: Text('700'),
                               ),
                             ),
                             Container(
                               height: 50.0,
                               color: _mc.shade800,
-                              child: Center(
+                              child: const Center(
                                 child: Text('800'),
                               ),
                             ),
                             Container(
                               height: 50.0,
                               color: _mc.shade900,
-                              child: Center(
+                              child: const Center(
                                 child: Text('900'),
                               ),
                             )
@@ -187,15 +186,15 @@ class _MyAppState extends State<MyApp> {
                       getColorNameFromColor(_color).getName,
                       style: Theme.of(context)
                           .textTheme
-                          .headline6!
-                          .copyWith(fontSize: 13.0, color: getTextColor()),
+                          .headline6
+                          ?.copyWith(fontSize: 13.0, color: getTextColor()),
                     ),
                   ),
                   Container(
                     alignment: Alignment.centerRight,
                     child: Text(
                       '#${_color.value.toRadixString(16).toUpperCase()}',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.caption?.copyWith(
                           color: getTextColor(),
                           fontSize: 16.0,
                           fontWeight: FontWeight.w300),
@@ -242,7 +241,7 @@ typedef SaturationTypeChange = void Function(ColorSaturation colorSaturation);
 typedef LuminosityTypeChange = void Function(ColorBrightness colorBrightness);
 
 class FilterDialog extends StatefulWidget {
-  FilterDialog({
+  const FilterDialog({
     Key? key,
     required this.hueType,
     required this.colorSaturation,
@@ -288,7 +287,7 @@ class _FilterDialogState extends State<FilterDialog> {
           children: <Widget>[
             Container(
               color: Colors.white,
-              child: Text('Color hue: '),
+              child: const Text('Color hue: '),
             ),
             Container(
               height: 175.0,
@@ -297,9 +296,9 @@ class _FilterDialogState extends State<FilterDialog> {
                 shrinkWrap: true,
                 itemCount: ColorHue.values.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final _hue = _hueType.firstWhereOrNull((ColorHue hue) =>
+                  final ColorHue? _hue = _hueType.firstWhere((ColorHue hue) =>
                       hue.type == ColorHue.values[index].type);
-                  final _color = RandomColor(8).randomColor(
+                  final Color _color = RandomColor(8).randomColor(
                       colorHue: ColorHue.values[index],
                       colorSaturation: _colorSaturation,
                       colorBrightness: _colorLuminosity);
@@ -332,7 +331,7 @@ class _FilterDialogState extends State<FilterDialog> {
                                     }
 
                                     _hueType.removeWhere(
-                                        (ColorHue? hue) => hue == null);
+                                        (ColorHue hue) => hue == null);
                                     widget.hueTypeChange(_hueType);
                                   },
                                 )
@@ -356,17 +355,15 @@ class _FilterDialogState extends State<FilterDialog> {
           children: <Widget>[
             Container(
               color: Colors.white,
-              child: Text('Color brightness: '),
+              child: const Text('Color brightness: '),
             ),
             DropdownButton<int>(
               value: _colorLuminosity.type,
               onChanged: (int? luminosity) {
-                if (luminosity != null) {
-                  setState(() =>
-                      _colorLuminosity = ColorBrightness.values[luminosity]);
+                setState(() =>
+                    _colorLuminosity = ColorBrightness.values[luminosity ?? 0]);
 
-                  widget.luminosityTypeChange(_colorLuminosity);
-                }
+                widget.luminosityTypeChange(_colorLuminosity);
               },
               items: ColorBrightness.values
                   .map((ColorBrightness l) => DropdownMenuItem<int>(
@@ -384,17 +381,15 @@ class _FilterDialogState extends State<FilterDialog> {
           children: <Widget>[
             Container(
               color: Colors.white,
-              child: Text('Color saturation: '),
+              child: const Text('Color saturation: '),
             ),
             DropdownButton<int>(
               value: _colorSaturation.type,
               onChanged: (int? saturation) {
-                if (saturation != null) {
-                  setState(() =>
-                      _colorSaturation = ColorSaturation.values[saturation]);
+                setState(() =>
+                    _colorSaturation = ColorSaturation.values[saturation ?? 0]);
 
-                  widget.saturationTypeChange(_colorSaturation);
-                }
+                widget.saturationTypeChange(_colorSaturation);
               },
               items: ColorSaturation.values
                   .map((ColorSaturation cf) => DropdownMenuItem<int>(

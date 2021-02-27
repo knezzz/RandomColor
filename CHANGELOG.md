@@ -1,3 +1,9 @@
+## [1.0.6-nullsafety] - 2020.04.04
+
+* Prepare for null-safety
+* Fix for #9 (The method 'returnHue' was called on null)
+
+
 ## [1.0.5] - 2020.04.04
 
 * BREAKING CHANGE: Range + (addition) will no longer mutate the object but return new instance of the object (range is const now)

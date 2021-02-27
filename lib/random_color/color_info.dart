@@ -1,13 +1,20 @@
 part of random_color;
 
+@immutable
 class ColorBrightness {
+  const ColorBrightness.custom(Range brightnessRange)
+      : _brightness = brightnessRange,
+        type = -1;
+
+  const ColorBrightness._(this._brightness, this.type);
+
   static const int minBrightness = 16;
   static const int maxBrightness = 84;
 
   static const ColorBrightness dark =
       ColorBrightness._(Range(minBrightness, minBrightness + 30), 3);
   static const ColorBrightness light = ColorBrightness._(
-      Range(((maxBrightness + minBrightness) ~/ 2), maxBrightness), 1);
+      Range((maxBrightness + minBrightness) ~/ 2, maxBrightness), 1);
 
   static const ColorBrightness primary =
       ColorBrightness._(Range(minBrightness + 20, maxBrightness - 20), 2);
@@ -25,16 +32,11 @@ class ColorBrightness {
   static const ColorBrightness veryDark =
       ColorBrightness._(Range(minBrightness ~/ 2, minBrightness + 30), 4);
   static const ColorBrightness veryLight = ColorBrightness._(
-      Range(((maxBrightness + minBrightness) ~/ 2),
+      Range((maxBrightness + minBrightness) ~/ 2,
           maxBrightness + (minBrightness ~/ 2)),
       0);
   final Range _brightness;
   final int type;
-  const ColorBrightness.custom(Range brightnessRange)
-      : _brightness = brightnessRange,
-        type = -1;
-
-  const ColorBrightness._(this._brightness, this.type);
 
   int returnBrightness(Random random) {
     return _brightness.randomWithin(random);
@@ -78,7 +80,13 @@ class ColorBrightness {
   int get hashCode => _brightness.hashCode ^ type.hashCode;
 }
 
+@immutable
 class ColorHue {
+  const ColorHue.custom(Range hueRange)
+      : _hue = hueRange,
+        type = -1;
+  const ColorHue._(this._hue, this.type);
+
   static const ColorHue blue = ColorHue._(Range(180, 240), 4);
 
   static const ColorHue green = ColorHue._(Range(60, 180), 3);
@@ -103,10 +111,6 @@ class ColorHue {
   static const ColorHue yellow = ColorHue._(Range(40, 60), 2);
   final Range _hue;
   final int type;
-  const ColorHue.custom(Range hueRange)
-      : _hue = hueRange,
-        type = -1;
-  const ColorHue._(this._hue, this.type);
 
   int returnHue(Random random) {
     var _h = _hue.randomWithin(random);
@@ -160,7 +164,14 @@ class ColorHue {
   int get hashCode => _hue.hashCode ^ type.hashCode;
 }
 
+@immutable
 class ColorSaturation {
+  const ColorSaturation.custom(Range saturationRange)
+      : _saturation = saturationRange,
+        type = -1;
+
+  const ColorSaturation._(this._saturation, this.type);
+
   static const ColorSaturation highSaturation =
       ColorSaturation._(Range(80, 100), 2);
 
@@ -181,11 +192,6 @@ class ColorSaturation {
   ];
   final Range _saturation;
   final int type;
-  const ColorSaturation.custom(Range saturationRange)
-      : _saturation = saturationRange,
-        type = -1;
-
-  const ColorSaturation._(this._saturation, this.type);
 
   int returnSaturation(Random random) {
     return _saturation.randomWithin(random);
@@ -227,11 +233,8 @@ class ColorSaturation {
   int get hashCode => _saturation.hashCode ^ type.hashCode;
 }
 
+@immutable
 class Range {
-  final int start;
-
-  final int end;
-
   const Range(this.start, this.end);
 
   const Range.staticValue(int value)
@@ -240,6 +243,9 @@ class Range {
   const Range.zero()
       : start = 0,
         end = 0;
+
+  final int start;
+  final int end;
 
   Range operator +(Range range) {
     return Range((start + range.start) ~/ 2, end);

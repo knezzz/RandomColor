@@ -1,6 +1,7 @@
 # Random color generator
 
 [![pub package](https://img.shields.io/pub/v/random_color.svg)](https://pub.dartlang.org/packages/random_color) 
+[![CodeFactor](https://www.codefactor.io/repository/github/knezzz/randomcolor/badge/master)](https://www.codefactor.io/repository/github/knezzz/randomcolor/overview/master)
 
 Pub link: https://pub.dartlang.org/packages/random_color
 
