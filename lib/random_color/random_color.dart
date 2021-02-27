@@ -13,19 +13,19 @@ part of random_color;
 class RandomColor {
   /// Constructor for random generator
   /// [seed] Random seed to use for generating colors
-  RandomColor([int seed]) {
+  RandomColor([int? seed]) {
     if (seed != null) {
       _random = new Random(seed);
+    } else {
+      _random = new Random();
     }
-
-    _random ??= new Random();
   }
 
   bool debug = false;
 
   final int minBrightness = 16;
   final int maxBrightness = 84;
-  Random _random;
+  late Random _random;
 
   ///
   /// Get random color
@@ -48,6 +48,10 @@ class RandomColor {
     int h;
     int b;
 
+    colorHue ??= ColorHue.random;
+    colorSaturation ??= ColorSaturation.random;
+    colorBrightness ??= ColorBrightness.random;
+
     h = colorHue.returnHue(_random);
     s = colorSaturation.returnSaturation(_random);
     b = colorBrightness.returnBrightness(_random);
@@ -59,17 +63,22 @@ class RandomColor {
     return _getColor(h, s, b);
   }
 
-  MaterialColor randomMaterialColor(
-      {ColorHue colorHue = ColorHue.random,
-      ColorSaturation colorSaturation = ColorSaturation.random,
-      bool debug = false}) {
+  MaterialColor randomMaterialColor({
+    ColorHue colorHue = ColorHue.random,
+    ColorSaturation colorSaturation = ColorSaturation.random,
+    bool debug = false,
+  }) {
     int saturation;
     int hue;
     int brightness;
 
+    colorHue ??= ColorHue.random;
+    colorSaturation ??= ColorSaturation.random;
+
     hue = colorHue.returnHue(_random);
     saturation = colorSaturation.returnSaturation(_random);
-    brightness = const ColorBrightness.custom(Range(45, 55)).returnBrightness(_random);
+    brightness =
+        const ColorBrightness.custom(Range(45, 55)).returnBrightness(_random);
 
     /// Middle color
     final Color _baseColor = _getColor(hue, saturation, brightness);
@@ -82,7 +91,8 @@ class RandomColor {
       return _getColor(hue, saturation, brightness - (darkerShade * 5));
     }
 
-    final MaterialColor _finishedColor = MaterialColor(_baseColor.value, <int, Color>{
+    final MaterialColor _finishedColor =
+        MaterialColor(_baseColor.value, <int, Color>{
       50: _getLighterColor(5),
       100: _getLighterColor(4),
       200: _getLighterColor(3),
@@ -102,17 +112,21 @@ class RandomColor {
   /// Calls [randomColor] for [count] number of times.
   /// [count] Number of colors
   List<Color> randomColors({
-    @required int count,
-    ColorHue colorHue,
-    ColorSaturation colorSaturation,
-    ColorBrightness colorBrightness,
+    required int count,
+    ColorHue colorHue = ColorHue.random,
+    ColorSaturation colorSaturation = ColorSaturation.random,
+    ColorBrightness colorBrightness = ColorBrightness.random,
     bool debug = false,
   }) {
     final List<Color> colors = <Color>[];
 
     for (int i = 0; i < count; i++) {
       colors.add(randomColor(
-          colorHue: colorHue, colorSaturation: colorSaturation, colorBrightness: colorBrightness, debug: debug));
+        colorHue: colorHue,
+        colorSaturation: colorSaturation,
+        colorBrightness: colorBrightness,
+        debug: debug,
+      ));
     }
 
     return colors;

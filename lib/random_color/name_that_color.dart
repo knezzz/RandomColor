@@ -1606,13 +1606,17 @@ MyColor getColorNameFromString(String color) {
   final int s = (hsl.saturation * 100).toInt();
   final int l = (hsl.lightness * 100).toInt();
 
-  int ndf1, ndf2, ndf, df = -1, cl = -1;
+  num ndf1, ndf2, ndf, df = -1;
+  int cl = -1;
+
   for (int i = 0; i < colorNames.length; i++) {
     if (color == colorNames[i].getCode) {
       return colorNames[i];
     }
 
-    ndf1 = pow(r - colorNames[i].getRed, 2) + pow(g - colorNames[i].getGreen, 2) + pow(b - colorNames[i].getBlue, 2);
+    ndf1 = pow(r - colorNames[i].getRed, 2) +
+        pow(g - colorNames[i].getGreen, 2) +
+        pow(b - colorNames[i].getBlue, 2);
     ndf2 = pow(h - colorNames[i].getHue, 2) +
         pow(s - colorNames[i].getSaturation, 2) +
         pow(l - colorNames[i].getLightness, 2);
@@ -1623,7 +1627,9 @@ MyColor getColorNameFromString(String color) {
     }
   }
 
-  return cl < 0 ? new MyColor(Colors.white, 'Color [$color] not found!') : colorNames[cl];
+  return cl < 0
+      ? new MyColor(Colors.white, 'Color [$color] not found!')
+      : colorNames[cl];
 }
 
 ///
