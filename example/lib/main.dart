@@ -1,11 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 
-void main() => runApp(MaterialApp(home: new MyApp()));
+void main() => runApp(MaterialApp(home: MyApp()));
 
 class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => new _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -24,8 +25,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: const Text('Example of Random colors library'),
       ),
       body: Container(child: _showColors()),
@@ -34,7 +35,7 @@ class _MyAppState extends State<MyApp> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: new FloatingActionButton(
+            child: FloatingActionButton(
               tooltip: 'RefreshColors',
               child: const Icon(Icons.refresh),
               onPressed: _updateColor,
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: new FloatingActionButton(
+            child: FloatingActionButton(
               tooltip: 'Filter',
               child: const Icon(Icons.filter_list),
               onPressed: _showFilterDialog,
@@ -73,10 +74,6 @@ class _MyAppState extends State<MyApp> {
         }
 
         Color getTextColor() {
-          if (_color == null) {
-            return Colors.black;
-          }
-
           if (_color.computeLuminance() > 0.3) {
             return Colors.black;
           } else {
@@ -240,9 +237,9 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-typedef void HueTypeChange(List<ColorHue> colorHues);
-typedef void SaturationTypeChange(ColorSaturation colorSaturation);
-typedef void LuminosityTypeChange(ColorBrightness colorBrightness);
+typedef HueTypeChange = void Function(List<ColorHue> colorHues);
+typedef SaturationTypeChange = void Function(ColorSaturation colorSaturation);
+typedef LuminosityTypeChange = void Function(ColorBrightness colorBrightness);
 
 class FilterDialog extends StatefulWidget {
   const FilterDialog({
@@ -264,7 +261,7 @@ class FilterDialog extends StatefulWidget {
   final LuminosityTypeChange luminosityTypeChange;
 
   @override
-  _FilterDialogState createState() => new _FilterDialogState();
+  _FilterDialogState createState() => _FilterDialogState();
 }
 
 class _FilterDialogState extends State<FilterDialog> {
@@ -367,7 +364,8 @@ class _FilterDialogState extends State<FilterDialog> {
                 setState(() =>
                     _colorLuminosity = ColorBrightness.values[luminosity ?? 0]);
 
-                widget.luminosityTypeChange(_colorLuminosity);
+                  widget.luminosityTypeChange(_colorLuminosity);
+                }
               },
               items: ColorBrightness.values
                   .map((ColorBrightness l) => DropdownMenuItem<int>(
@@ -393,7 +391,8 @@ class _FilterDialogState extends State<FilterDialog> {
                 setState(() =>
                     _colorSaturation = ColorSaturation.values[saturation ?? 0]);
 
-                widget.saturationTypeChange(_colorSaturation);
+                  widget.saturationTypeChange(_colorSaturation);
+                }
               },
               items: ColorSaturation.values
                   .map((ColorSaturation cf) => DropdownMenuItem<int>(

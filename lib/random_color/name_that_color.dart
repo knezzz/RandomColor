@@ -1,6 +1,6 @@
 part of random_color;
 
-final List<MyColor> colorNames = <MyColor>[
+final colorNames = <MyColor>[
   MyColor(Color(int.parse('000000', radix: 16)), 'Black'),
   MyColor(Color(int.parse('000080', radix: 16)), 'Navy Blue'),
   MyColor(Color(int.parse('0000C8', radix: 16)), 'Dark Blue'),
@@ -1573,53 +1573,50 @@ final List<MyColor> colorNames = <MyColor>[
 /// Error handling will show problematic color code
 ///
 MyColor getColorNameFromColor(Color color) {
-  final String colorName = '${color.value.toRadixString(16).substring(2)}';
+  final colorName = '${color.value.toRadixString(16).substring(2)}';
 
   try {
     return getColorNameFromString(colorName);
   } catch (rangeException) {
-    return new MyColor(Colors.white, 'Code: #$colorName\nIs out of range!');
+    return MyColor(Colors.white, 'Code: #$colorName\nIs out of range!');
   }
 }
 
 MyColor getColorNameFromString(String color) {
   color = color.toUpperCase();
   if (color.length < 3 || color.length > 6) {
-    return new MyColor(Colors.white, 'Invalid color $color');
+    return MyColor(Colors.white, 'Invalid color $color');
   }
 
-  if (color.length == 3)
+  if (color.length == 3) {
     color = color.substring(0, 1) +
         color.substring(0, 1) +
         color.substring(1, 1) +
         color.substring(1, 1) +
         color.substring(2, 1) +
         color.substring(2, 1);
+  }
 
-  final Color _color = Color(int.parse(color, radix: 16));
-  final int r = _color.red;
-  final int g = _color.green;
-  final int b = _color.blue;
+  final _color = Color(int.parse(color, radix: 16));
+  final r = _color.red;
+  final g = _color.green;
+  final b = _color.blue;
 
-  final HSLColor hsl = HSLColor.fromColor(_color);
-  final int h = hsl.hue.toInt();
-  final int s = (hsl.saturation * 100).toInt();
-  final int l = (hsl.lightness * 100).toInt();
+  final hsl = HSLColor.fromColor(_color);
+  final h = hsl.hue.toInt();
+  final s = (hsl.saturation * 100).toInt();
+  final l = (hsl.lightness * 100).toInt();
 
-  num ndf1, ndf2, ndf, df = -1;
-  int cl = -1;
-
-  for (int i = 0; i < colorNames.length; i++) {
-    if (color == colorNames[i].getCode) {
-      return colorNames[i];
-    }
+  int ndf1, ndf2, ndf, df = -1, cl = -1;
+  for (var i = 0; i < colorNames.length; i++) {
+    if (color == colorNames[i].getCode) return colorNames[i];
 
     ndf1 = pow(r - colorNames[i].getRed, 2) +
         pow(g - colorNames[i].getGreen, 2) +
-        pow(b - colorNames[i].getBlue, 2);
+        pow(b - colorNames[i].getBlue, 2) as int;
     ndf2 = pow(h - colorNames[i].getHue, 2) +
         pow(s - colorNames[i].getSaturation, 2) +
-        pow(l - colorNames[i].getLightness, 2);
+        pow(l - colorNames[i].getLightness, 2) as int;
     ndf = ndf1 + ndf2 * 2;
     if (df < 0 || df > ndf) {
       df = ndf;
@@ -1628,7 +1625,7 @@ MyColor getColorNameFromString(String color) {
   }
 
   return cl < 0
-      ? new MyColor(Colors.white, 'Color [$color] not found!')
+      ? MyColor(Colors.white, 'Color [$color] not found!')
       : colorNames[cl];
 }
 

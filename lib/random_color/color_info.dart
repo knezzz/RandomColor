@@ -113,7 +113,7 @@ class ColorHue {
   final int type;
 
   int returnHue(Random random) {
-    int _h = _hue.randomWithin(random);
+    var _h = _hue.randomWithin(random);
 
     if (_h < 0) {
       _h = 360 + _h;

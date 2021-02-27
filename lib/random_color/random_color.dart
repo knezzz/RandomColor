@@ -81,7 +81,7 @@ class RandomColor {
         const ColorBrightness.custom(Range(45, 55)).returnBrightness(_random);
 
     /// Middle color
-    final Color _baseColor = _getColor(hue, saturation, brightness);
+    final _baseColor = _getColor(hue, saturation, brightness);
 
     Color _getLighterColor(int lighterShade) {
       return _getColor(hue, saturation, brightness + (lighterShade * 5));
@@ -118,9 +118,9 @@ class RandomColor {
     ColorBrightness colorBrightness = ColorBrightness.random,
     bool debug = false,
   }) {
-    final List<Color> colors = <Color>[];
+    final colors = <Color>[];
 
-    for (int i = 0; i < count; i++) {
+    for (var i = 0; i < count; i++) {
       colors.add(randomColor(
         colorHue: colorHue,
         colorSaturation: colorSaturation,
@@ -135,10 +135,10 @@ class RandomColor {
   /// Need to get RGB from hsv values and make new color from them.
   /// Ported to dart from: https://stackoverflow.com/a/25964657/3700909
   Color _getColor(int hue, int saturation, int brightness) {
-    final double s = saturation / 100;
-    final double v = brightness / 100;
+    final s = saturation / 100;
+    final v = brightness / 100;
 
-    final Color _color = HSLColor.fromAHSL(1.0, hue.toDouble(), s, v).toColor();
+    final _color = HSLColor.fromAHSL(1.0, hue.toDouble(), s, v).toColor();
 
     return _color;
   }
