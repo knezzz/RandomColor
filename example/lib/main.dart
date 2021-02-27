@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 
@@ -364,8 +363,7 @@ class _FilterDialogState extends State<FilterDialog> {
                 setState(() =>
                     _colorLuminosity = ColorBrightness.values[luminosity ?? 0]);
 
-                  widget.luminosityTypeChange(_colorLuminosity);
-                }
+                widget.luminosityTypeChange(_colorLuminosity);
               },
               items: ColorBrightness.values
                   .map((ColorBrightness l) => DropdownMenuItem<int>(
@@ -391,8 +389,7 @@ class _FilterDialogState extends State<FilterDialog> {
                 setState(() =>
                     _colorSaturation = ColorSaturation.values[saturation ?? 0]);
 
-                  widget.saturationTypeChange(_colorSaturation);
-                }
+                widget.saturationTypeChange(_colorSaturation);
               },
               items: ColorSaturation.values
                   .map((ColorSaturation cf) => DropdownMenuItem<int>(

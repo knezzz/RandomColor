@@ -48,10 +48,6 @@ class RandomColor {
     int h;
     int b;
 
-    colorHue ??= ColorHue.random;
-    colorSaturation ??= ColorSaturation.random;
-    colorBrightness ??= ColorBrightness.random;
-
     h = colorHue.returnHue(_random);
     s = colorSaturation.returnSaturation(_random);
     b = colorBrightness.returnBrightness(_random);
@@ -72,9 +68,6 @@ class RandomColor {
     int hue;
     int brightness;
 
-    colorHue ??= ColorHue.random;
-    colorSaturation ??= ColorSaturation.random;
-
     hue = colorHue.returnHue(_random);
     saturation = colorSaturation.returnSaturation(_random);
     brightness =
@@ -91,8 +84,7 @@ class RandomColor {
       return _getColor(hue, saturation, brightness - (darkerShade * 5));
     }
 
-    final MaterialColor _finishedColor =
-        MaterialColor(_baseColor.value, <int, Color>{
+    final _finishedColor = MaterialColor(_baseColor.value, <int, Color>{
       50: _getLighterColor(5),
       100: _getLighterColor(4),
       200: _getLighterColor(3),
