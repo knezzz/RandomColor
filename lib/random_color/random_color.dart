@@ -15,9 +15,9 @@ class RandomColor {
   /// [seed] Random seed to use for generating colors
   RandomColor([int? seed]) {
     if (seed != null) {
-      _random = new Random(seed);
+      _random = Random(seed);
     } else {
-      _random = new Random();
+      _random = Random();
     }
   }
 
